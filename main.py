@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] ='mysql+pymysql://build-a-blog:blog@localh
 app.config['SQLALCHEMY_ECHO'] = True
 
 db = SQLAlchemy(app)
-
+app.secret_key = "7"
 
 class Post(db.Model):
 
@@ -36,8 +36,9 @@ def blog():
         return render_template('addnew.html', post=post)
     else:
         posts = Post.query.all()
+        print (posts[0].title)
         return render_template('allposts.html', title="Blog", posts=posts)  
- 
+        
 @app.route('/post_form', methods=["POST", "GET"])   
 def post_form():
     if request.method == "POST":
@@ -49,7 +50,7 @@ def post_form():
         new_post = Post(title, body)
         db.session.add(new_post)
         db.session.commit()
-        return redirect("/post?id=" + str(new_post.id))
+        return redirect("/blog?id=" + str(new_post.id))
 
     return render_template("blog.html", title="New Post")
 
