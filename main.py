@@ -36,7 +36,6 @@ def blog():
         return render_template('addnew.html', post=post)
     else:
         posts = Post.query.all()
-        print (posts[0].title)
         return render_template('allposts.html', title="Blog", posts=posts)  
         
 @app.route('/post_form', methods=["POST", "GET"])   
